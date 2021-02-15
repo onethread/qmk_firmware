@@ -36,9 +36,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 250
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
-// Apply the modifier on keys that are tapped during a short hold of a modtap
-#define PERMISSIVE_HOLD
-#define RETRO_TAPPING
 
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
