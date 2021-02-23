@@ -31,6 +31,7 @@ enum layer_number {
   _NUMR,
   _SYMR,
   _NAVL,
+  _MOUL,
   _NUML,
   _FUNL,
   _MEDL
@@ -48,8 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
      * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
      * `-----------------------------------------/       /     \      \-----------------------------------------'
-     *                   | LAlt | LGUI |Space | /  Tab  /       \Enter \  |Space |BackSP| RGUI |
-     *                   |      |      |LOWER |/       /         \      \ |RAISE |      |      |
+     *                   | LAlt | LGUI |BackSP| /  Tab  /       \Enter \  |Space | NAVL | FUNL |
+     *                   |      |      |LOWER |/ SYMR  /         \ MOUL \ |RAISE |      |      |
      *                   `----------------------------'           '------''--------------------'
      */
 
@@ -58,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
         KC_LCTRL, LCTL_TA,LALT_TS, LGUI_TD, LSFT_TF, KC_G,                     KC_H,    RSFT_TJ, RGUI_TK, LALT_TL, RCTL_TSCLN, KC_QUOT, \
         KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT, \
-                          KC_LALT, KC_LGUI, LT(_NUMR, KC_BSPC), LT(_SYMR, KC_TAB),  KC_ENT, LT(_NAVL, KC_SPC), MO(_MEDL), MO(_FUNL) \
+                          KC_LALT, KC_LGUI, LT(_NUMR, KC_BSPC), LT(_SYMR, KC_TAB),  LT(_MOUL, KC_ENT), LT(_NAVL, KC_SPC), MO(_MEDL), MO(_FUNL) \
 ),
     /* LOWER
     * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -168,6 +169,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,                   XXXXXXX, KC_RSFT, KC_RGUI, KC_LALT, KC_RCTL, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
                                    _______, _______, _______, _______, _______, _______, _______, _______  \
+    ),
+
+    [_MOUL] = LAYOUT(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, KC_WH_R, KC_WH_U, KC_WH_D, KC_WH_L, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+                                   XXXXXXX, KC_BTN3, KC_BTN1, KC_BTN2,  _______, _______, _______, _______  \
     ),
 
     [_NUML] = LAYOUT(
