@@ -17,6 +17,7 @@ enum layer_number {
   _RAISE,
   _NAVR,
   _NUMR,
+  _NUMPADR,
   _SYMR,
   _NAVL,
   _MOUL,
@@ -147,11 +148,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMR] = LAYOUT(
+        XXXXXXX, XXXXXXX,       XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
+        XXXXXXX, XXXXXXX,       XXXXXXX,        XXXXXXX,        KC_LBRC,        XXXXXXX,                   KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX, _______, _______, \
+        XXXXXXX, LCTL_T(KC_1),  LALT_T(KC_2),   LGUI_T(KC_3),   LSFT_T(KC_4),   XXXXXXX,                   KC_MINS, RSFT_T(KC_7),   RGUI_T(KC_8),   LALT_T(KC_9),   RCTL_T(KC_0), _______, \
+        XXXXXXX, KC_GRV,        XXXXXXX,        XXXXXXX,        KC_5,           XXXXXXX, XXXXXXX, XXXXXXX, KC_EQL,  KC_6,    KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX, \
+                                                _______,        _______,        _______, _______, _______, _______, KC_LBRC, KC_RBRC  \
+    ),
+
+    [_NUMPADR] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX, \
         XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, XXXXXXX,                   KC_MINS, KC_4,    KC_5,    KC_6,    KC_PLUS, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ASTR, KC_1,    KC_2,    KC_3,    KC_SLSH, XXXXXXX, \
-                                   _______, _______, _______, _______, _______, KC_COMM, KC_DOT,  _______  \
+                                   _______, _______, _______, _______, _______, KC_0,    KC_COMM, KC_DOT    \
     ),
 
     [_SYMR] = LAYOUT(
