@@ -250,15 +250,50 @@ void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
 
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
+void render_layer_state(void) {
+    oled_write_P(PSTR("Layer: "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _COLEMAKDH:
+            oled_write_ln_P(PSTR("Colemak DH"), false);
+            break;
+        case _QWERTY:
+            oled_write_ln_P(PSTR("Qwerty"), false);
+            break;
+        case _NUMR:
+            oled_write_ln_P(PSTR("NUMR"), false);
+            break;
+        case _NUMPADR:
+            oled_write_ln_P(PSTR("NUMPADR"), false);
+            break;
+        case _SYMR:
+            oled_write_ln_P(PSTR("SYMR"), false);
+            break;
+        case _MOUL:
+            oled_write_ln_P(PSTR("MOUL"), false);
+            break;
+        case _NAVL:
+            oled_write_ln_P(PSTR("NAVL"), false);
+            break;
+        case _MEDL:
+            oled_write_ln_P(PSTR("MEDL"), false);
+            break;
+        case _FUNL:
+            oled_write_ln_P(PSTR("FUNL"), false);
+            break;
+        case _ADJUST:
+            oled_write_ln_P(PSTR("ADJUST"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+}
 
 void oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
+    render_layer_state();
     oled_write_ln(read_keylog(), false);
     oled_write_ln(read_keylogs(), false);
     //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
