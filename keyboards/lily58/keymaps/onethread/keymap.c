@@ -8,22 +8,11 @@
   #include "ssd1306.h"
 #endif
 
-// Left-hand home row mods
-#define LCTL_TA LCTL_T(KC_A)
-#define LALT_TS LALT_T(KC_S)
-#define LGUI_TD LGUI_T(KC_D)
-#define LSFT_TF LSFT_T(KC_F)
-
-// Right-hand home row mods
-#define RSFT_TJ RSFT_T(KC_J)
-#define RGUI_TK RGUI_T(KC_K)
-#define LALT_TL LALT_T(KC_L)
-#define RCTL_TSCLN RCTL_T(KC_SCLN)
-
 extern uint8_t is_master;
 
 enum layer_number {
-  _QWERTY = 0,
+  _COLEMAKDH = 0,
+  _QWERTY,
   _LOWER,
   _RAISE,
   _ADJUST,
@@ -37,30 +26,60 @@ enum layer_number {
   _MEDL
 };
 
+enum custom_keycodes {
+  // Layer Macros
+  CLMKDH = SAFE_RANGE,
+  QWERTY,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
+    /* COLEMAK-DH
+     * ,-----------------------------------------.                    ,-----------------------------------------.
+     * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  -   |
+     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+     * |Delete|   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  |  \   |
+     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+     * | ESC  |   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  |  '   |
+     * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+     * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |RShift|
+     * `-----------------------------------------/       /     \      \-----------------------------------------'
+     *                   | LAlt | LGUI |BackSP| /  Tab  /       \Enter \  |Space | NAVL | FUNL |
+     *                   |      |      |NUMR  |/ SYMR  /         \ MOUL \ |MEDL  |      |      |
+     *                   `----------------------------'           '------''--------------------'
+     */
+
+    [_COLEMAKDH] = LAYOUT(
+        KC_GRV,     KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                                       KC_6,               KC_7,           KC_8,           KC_9,           KC_0,               KC_MINUS, \
+        KC_DEL,     KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                                                       KC_J,               KC_L,           KC_U,           KC_Y,           KC_SCLN,            KC_BSLS, \
+        KC_ESC,     LCTL_T(KC_A),   LALT_T(KC_R),   LGUI_T(KC_S),   LSFT_T(KC_T),   KC_G,                                                       KC_M,               RSFT_T(KC_N),   RGUI_T(KC_E),   LALT_T(KC_I),   RCTL_T(KC_O),       KC_QUOT, \
+        KC_LSFT,    KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,               KC_LBRC,            KC_RBRC,            KC_K,               KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,            KC_RSFT, \
+                                                    KC_LALT,        KC_LGUI,        LT(_NUMR, KC_BSPC), LT(_NAVL, KC_TAB),  LT(_MOUL, KC_ENT),  LT(_SYMR, KC_SPC),  MO(_MEDL),      MO(_FUNL) \
+    ),
 
     /* QWERTY
      * ,-----------------------------------------.                    ,-----------------------------------------.
      * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  -   |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
+     * |Delete|   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+     * | ESC  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
      * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
      * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
      * `-----------------------------------------/       /     \      \-----------------------------------------'
-     *                   | LAlt | LGUI |BackSP| /  Tab  /       \Enter \  |Space | NAVL | FUNL |
-     *                   |      |      |LOWER |/ SYMR  /         \ MOUL \ |RAISE |      |      |
+     *                   | NUMR | LGUI |BackSP| /  Tab  /       \Enter \  |Space | NAVL | FUNL |
+     *                   |      |      |      |/ SYMR  /         \ MOUL \ |MEDL  |      |      |
      *                   `----------------------------'           '------''--------------------'
      */
 
     [_QWERTY] = LAYOUT( \
-        KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINUS, \
-        KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
-        KC_LCTRL, LCTL_TA,LALT_TS, LGUI_TD, LSFT_TF, KC_G,                     KC_H,    RSFT_TJ, RGUI_TK, LALT_TL, RCTL_TSCLN, KC_QUOT, \
-        KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT, \
-                          KC_LALT, KC_LGUI, LT(_NUMR, KC_BSPC), LT(_SYMR, KC_TAB),  LT(_MOUL, KC_ENT), LT(_NAVL, KC_SPC), MO(_MEDL), MO(_FUNL) \
-),
+        KC_GRV,     KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                                       KC_6,               KC_7,           KC_8,           KC_9,           KC_0,               KC_MINUS, \
+        KC_DEL,     KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                                       KC_Y,               KC_U,           KC_I,           KC_O,           KC_P,               KC_BSLS, \
+        KC_ESC,     LCTL_T(KC_A),   LALT_T(KC_S),   LGUI_T(KC_D),   LSFT_T(KC_F),   KC_G,                                                       KC_H,               RSFT_T(KC_J),   RGUI_T(KC_K),   LALT_T(KC_L),   RCTL_T(KC_SCLN),    KC_QUOT, \
+        KC_LSFT,    KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,               KC_LBRC,            KC_RBRC,            KC_N,               KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,            KC_RSFT, \
+                                                    MO(_NUMR),   KC_LGUI,        LT(_NUMR, KC_BSPC), LT(_NAVL, KC_TAB),  LT(_MOUL, KC_ENT),  LT(_SYMR, KC_SPC), MO(_MEDL),      MO(_FUNL) \
+    ),
+
     /* LOWER
     * ,-----------------------------------------.                    ,-----------------------------------------.
     * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
@@ -256,5 +275,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     // set_timelog();
   }
-  return true;
+
+  switch (keycode) {
+      case CLMKDH:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_COLEMAKDH);
+        }
+        return false;
+    case QWERTY:
+        if (record-> event.pressed) {
+            set_single_persistent_default_layer(_QWERTY);
+        }
+        return false;
+    default:
+        return true;
+  }
 }
