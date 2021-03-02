@@ -15,7 +15,6 @@ enum layer_number {
   _QWERTY,
   _LOWER,
   _RAISE,
-  _ADJUST,
   _NAVR,
   _NUMR,
   _SYMR,
@@ -23,7 +22,8 @@ enum layer_number {
   _MOUL,
   _NUML,
   _FUNL,
-  _MEDL
+  _MEDL,
+  _ADJUST,
 };
 
 enum custom_keycodes {
@@ -123,27 +123,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,  _______, _______,  _______, KC_UNDS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
                                     _______, _______, _______,  _______, _______,  _______, _______, _______ \
     ),
-    /* ADJUST
-    * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
-    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
-    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * |      |      |      |      |      |      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
-    * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
-    * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
-    * `-----------------------------------------/       /     \      \-----------------------------------------'
-    *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
-    *                   |      |      |      |/       /         \      \ |      |      |      |
-    *                   `----------------------------'           '------''--------------------'
-    */
-    [_ADJUST] = LAYOUT( \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-                                   _______, _______, _______, _______, _______, _______, _______, _______  \
-    ),
 
     /* NAV RIGHT
     * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -187,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
         XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,                   XXXXXXX, KC_RSFT, KC_RGUI, KC_LALT, KC_RCTL, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-                                   _______, _______, _______, _______, _______, _______, _______, _______  \
+                                   _______, _______, _______, _______, LT(_ADJUST, KC_ENT), _______, _______, _______  \
     ),
 
     [_MOUL] = LAYOUT(
@@ -195,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_WH_R, KC_WH_U, KC_WH_D, KC_WH_L, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
         XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-                                   XXXXXXX, KC_BTN3, KC_BTN1, KC_BTN2,  _______, _______, _______, _______  \
+                                   XXXXXXX, KC_BTN3, KC_BTN1, LT(_ADJUST, KC_BTN2),  _______, _______, _______, _______  \
     ),
 
     [_NUML] = LAYOUT(
@@ -221,16 +200,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, KC__MUTE, KC_MPLY, _______, _______, _______, _______  \
     ),
 
+        /* ADJUST
+    * ,-----------------------------------------.                    ,-----------------------------------------.
+    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * |      |      |      |QWERTY|CLMKDH|      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
+    * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+    * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
+    * `-----------------------------------------/       /     \      \-----------------------------------------'
+    *                   |      |      |      | /       /       \      \  |      |      |      |
+    *                   |      |      |      |/       /         \      \ |      |      |      |
+    *                   `----------------------------'           '------''--------------------'
+    */
+    [_ADJUST] = LAYOUT( \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, QWERTY,  CLMKDH,  XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+                                   _______, _______, _______, _______, _______, _______, _______, _______  \
+    ),
+
 };
 
-// Setting ADJUST layer RGB back to default
-void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
-  } else {
-    layer_off(layer3);
-  }
-}
 
 //SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
 #ifdef OLED_DRIVER_ENABLE
@@ -287,6 +280,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             set_single_persistent_default_layer(_QWERTY);
         }
         return false;
+    case LT(_SYMR, KC_TAB):
+    case LT(_MOUL, KC_ENT):
+        update_tri_layer(_SYMR, _MOUL, _ADJUST);
+        return true;
     default:
         return true;
   }
